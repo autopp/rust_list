@@ -26,6 +26,13 @@ pub fn list(elems: &Vec<i64>) -> List {
     ret
 }
 
+pub fn length(l: &List) -> i64 {
+    match l {
+        List::Cons(_, rest) => length(rest) + 1,
+        List::Nil => 0
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -48,5 +55,11 @@ mod tests {
     fn test_tail() {
         assert_eq!(tail(&Cons(1, Box::new(Cons(2, Box::new(Nil))))), Some(&Cons(2, Box::new(Nil))));
         assert_eq!(tail(&Nil), None);
+    }
+
+    #[test]
+    fn test_length() {
+        assert_eq!(length(&list(&vec![])), 0);
+        assert_eq!(length(&list(&vec![1, 2])), 2)
     }
 }
