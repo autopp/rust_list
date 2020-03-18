@@ -18,10 +18,25 @@ pub fn tail(l: &List) -> Option<&List> {
     }
 }
 
+pub fn list(elems: &Vec<i64>) -> List {
+    let mut ret = List::Nil;
+    for x in elems.iter().rev() {
+        ret = List::Cons(*x, Box::new(ret))
+    }
+    ret
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use super::List::*;
+
+    #[test]
+    fn test_list() {
+        assert_eq!(list(&vec![]), Nil);
+        assert_eq!(list(&vec![1]), Cons(1, Box::new(Nil)));
+        assert_eq!(list(&vec![1, 2]), Cons(1, Box::new(Cons(2, Box::new(Nil)))))
+    }
 
     #[test]
     fn test_head() {
